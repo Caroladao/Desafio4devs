@@ -1,0 +1,69 @@
+body{
+    background: white;
+}
+
+.nav{
+    margin: 1% auto;
+    text-align: center;
+}
+
+section{
+    margin: 1% auto;
+    width: 70%;
+    padding: 2%;
+    height: auto;
+    background: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+    display: none;
+}
+
+.home{
+    padding: 5%;
+    text-align: center;
+    border: none;
+    display: block;
+}
+
+.home h1{
+    text-align: center;
+    font-size: 50pt;
+    color: grey;
+    margin: 2% 0;
+}
+
+.formcad{
+    margin: 0 auto;
+    width: 100%;
+}
+
+.custom-select{
+    display: inline-block;
+    width: 20%;
+}
+
+#table-avaliacoes{
+    margin: 1% 0;
+}
+
+#imgForLogic{
+    width: 70%;
+}
+
+.alert{
+    text-align: center;
+    padding: 10px;
+    background: #79c879;
+    color:#fff;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.alertt{
+    text-align: center;
+    padding: 10px;
+    background: #79c879;
+    color:#fff;
+    margin-bottom: 10px;
+    display: none;
+}

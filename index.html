@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/css.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Desafio ForLogic 4devs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <nav class="nav">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="menu-home" href="javascript: Menu('menu-home','home');">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="menu-cad-cliente" href="javascript: Menu('menu-cad-cliente','cadcliente');">Cadastro
+                    de Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="menu-lista-cli" href="javascript: Menu('menu-lista-cli','listaclientes');">Lista
+                    de Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="menu-cad-avalia" href="javascript: Menu('menu-cad-avalia','cadavaliacao');">Cadastro
+                    de Avaliação</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="menu-lista-avalia" href="javascript: Menu('menu-lista-avalia','listaavaliacao');">Lista
+                    de Avaliação</a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="home">
+        <h1>Desafio</h1>
+        <img id="imgForLogic" src="./image/forlogic.png" alt="ForLogic">
+    </section>
+
+    <section class="cadcliente">
+        <div class="alert">Cadastro realizado!</div>
+        <form class="formcad" id="contactform">
+            <h1>Cadastro de Cliente</h1>
+            <hr><br>
+            <div class="form-group">
+                <label for="nome">* Nome</label>
+                <input type="text" class="form-control" id="nome" aria-describedby="nome" placeholder="Razão social ou nome fantasia"
+                    required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="responsavel">* Nome de contato</label>
+                <input type="text" class="form-control" id="responsavel" aria-describedby="responsavel" placeholder="Nome do responsável"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="data">* Data em que se tornou cliente</label>
+                <input type="date" class="form-control" id="data" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Enviar</button>
+        </form>
+    </section>
+
+    <section class="listaclientes">
+        <h1>Clientes</h1>
+        <div class="row">
+            <div class="col-sm">
+                <table id="table-clientes" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome da Empresa</th>
+                            <th scope="col">Data de Cadastro</th>
+                            <th scope="col">Nome do Responsavel</th>
+                        </tr>
+                        
+                    </thead>
+                    <div id="tableFirebase">
+                        <!-- Aqui será carregado o corpo da tabela
+                            com as informações vindas da API -->
+                        </div>
+                </table>
+            </div>
+    </section>
+
+    <section class="cadavaliacao">
+        <div class="alertt">Cadastro realizado!</div>
+        <form class="formcad" id="formAvalia">
+            <h1>Cadastro de Avaliações</h1>
+            <hr><br>
+            <div class="form-group">
+                <label for="mes">* Selecione o mês e o ano da avaliação</label>
+                <br>
+                <select class="custom-select" id="selectMes">
+                    <option selected>Mês</option>
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+                <select class="custom-select" id="selectAno">
+                    <option selected>Ano</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="select-client">Avaliador</label>
+                <select id="select-client" class="form-control" name="select" size="3">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="escala">* Em uma escala de 0 a 10, qual a probabilidade de você recomendar nosso
+                    produto/serviço a um amigo/conhecido?</label>
+                <div class="form-check">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio0" value="0">
+                        <label class="form-check-label" for="inlineRadio0">0</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                        <label class="form-check-label" for="inlineRadio1">1</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                        <label class="form-check-label" for="inlineRadio2">2</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="3">
+                        <label class="form-check-label" for="inlineRadio3">3</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="4">
+                        <label class="form-check-label" for="inlineRadio4">4</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="5">
+                        <label class="form-check-label" for="inlineRadio5">5</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="6">
+                        <label class="form-check-label" for="inlineRadio6">6</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="7">
+                        <label class="form-check-label" for="inlineRadio7">7</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="8">
+                        <label class="form-check-label" for="inlineRadio8">8</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="9">
+                        <label class="form-check-label" for="inlineRadio9">9</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="10">
+                        <label class="form-check-label" for="inlineRadio10">10</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="motivo">* Qual é o motivo dessa nota?</label>
+                <input type="text" class="form-control" id="motivo" aria-describedby="motivo" placeholder="Descreva"
+                    required>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Enviar</button>
+        </form>
+    </section>
+
+    <section class="listaavaliacao">
+        <h1>Avaliações</h1>
+        <hr><br>
+        <div class="form-group">
+            <label for="mes">Selecione o mês e o ano da avaliação</label>
+            <br>
+            <select class="custom-select">
+                <option selected>Mês</option>
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+            </select>
+            <select class="custom-select">
+                <option selected>Ano</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg">Buscar</button>
+        <table id="table-avaliacoes" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Avaliador</th>
+                    <th scope="col">Data da avaliacão</th>
+                    <th scope="col">Nota</th>
+                    <th scope="col">Feedback</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
+
+
+    <!-- Scripts js -->
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/js.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
