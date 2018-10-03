@@ -1,11 +1,11 @@
- // Initialize Firebase
+// Initialize Firebase
 var config = {
-apiKey: "AIzaSyCNco53BppZFpTImiWEFGy4SdcfVMdFovI",
-authDomain: "desafio4devs.firebaseapp.com",
-databaseURL: "https://desafio4devs.firebaseio.com",
-projectId: "desafio4devs",
-storageBucket: "desafio4devs.appspot.com",
-messagingSenderId: "1017913899554"
+    apiKey: "AIzaSyCNco53BppZFpTImiWEFGy4SdcfVMdFovI",
+    authDomain: "desafio4devs.firebaseapp.com",
+    databaseURL: "https://desafio4devs.firebaseio.com",
+    projectId: "desafio4devs",
+    storageBucket: "desafio4devs.appspot.com",
+    messagingSenderId: "1017913899554"
 };
 firebase.initializeApp(config);
 
@@ -13,10 +13,10 @@ firebase.initializeApp(config);
 var messagesRef = firebase.database().ref('Clientes');
 
 //Dados do formulário
-document.getElementById('contactform').addEventListener('submit',submitForm);
+document.getElementById('contactform').addEventListener('submit', submitForm);
 
 //Submit form
-function submitForm(e){
+function submitForm(e) {
     e.preventDefault();
 
     //Pegar valores
@@ -25,15 +25,15 @@ function submitForm(e){
     var data = getInputVal('data');
 
     //salvar mensagem
-    saveMessage(nome, responsavel,data);
+    saveMessage(nome, responsavel, data);
 
     //Show alert
     document.querySelector('.alert').style.display = 'block';
 
     //Hide alert depois de 3 segundos
-    setTimeout(function(){
+    setTimeout(function () {
         document.querySelector('.alert').style.display = 'none';
-    },3000);
+    }, 3000);
 
     //limpar form
     document.getElementById('contactform').reset();
@@ -41,12 +41,12 @@ function submitForm(e){
 }
 
 //Função para pegar o valor dos formularios
-function getInputVal(id){
+function getInputVal(id) {
     return document.getElementById(id).value;
 }
 
 //Salvar mensagem
-function saveMessage(nome,responsavel,data){
+function saveMessage(nome, responsavel, data) {
     var newMessagesRef = messagesRef.push();
     newMessagesRef.set({
         nome: nome,
@@ -61,10 +61,10 @@ function saveMessage(nome,responsavel,data){
 var messagesRef2 = firebase.database().ref('Avaliacoes');
 
 //Dados do formulário
-document.getElementById('formAvalia').addEventListener('submit',submitForm2);
+document.getElementById('formAvalia').addEventListener('submit', submitForm2);
 
 //Submit form
-function submitForm2(e){
+function submitForm2(e) {
     e.preventDefault();
 
     //Pegar valores
@@ -81,9 +81,9 @@ function submitForm2(e){
     document.querySelector('.alertt').style.display = 'block';
 
     //Hide alert depois de 3 segundos
-    setTimeout(function(){
+    setTimeout(function () {
         document.querySelector('.alertt').style.display = 'none';
-    },3000);
+    }, 3000);
 
     //limpar form
     document.getElementById('formAvalia').reset();
@@ -91,7 +91,7 @@ function submitForm2(e){
 }
 
 //Salvar mensagem
-function saveMessage2(mes, ano, cliente, nota, motivo){
+function saveMessage2(mes, ano, cliente, nota, motivo) {
     var newMessagesRef2 = messagesRef2.push();
     newMessagesRef2.set({
         mes: mes,
@@ -102,19 +102,33 @@ function saveMessage2(mes, ano, cliente, nota, motivo){
     });
 }
 
-var tableFirebase = $('div.tableFirebase');
-$('a#menu-lista-cli').click(function(){
-    $.ajax({
-        type: 'GET',
-        url: "https://desafio4devs.firebaseio.com",
-        dataType: 'json',
-        sucess: function(data){
-            $each(data, function(index,item){
-                $each(item, function(key, value){
-                    tableFirebase.append(key +':'+value+'<br>');
-                });
-                tableFirebase.append('<br><br>');
-            });
-        }
+var nomes = [];
+var responsaveis = [];
+var cadastro = [];
+var fireid = [];
+
+firebase.database().ref('/Clientes/').on('value', function (snapshot) {
+    snapshot.forEach(element => {
+        nomes.push(element.val().nome);
+        responsaveis.push(element.val().responsavel);
+        cadastro.push(element.val().data);
+        fireid.push(element.key);
     });
 })
+
+var n = fireid.length;
+console.log(n);
+
+var i = 0;
+var tableFirebase = document.getElementById("tableFirebase");
+
+for(i= 0; i < n; i++){
+    var tr = "<tr>"+
+    "<td>" + nomes[i] + "</td>" +
+    "<td>" + responsaveis[i] + "</td>" +
+    "<td>" + cadastro[i] + "</td>" +
+    "</tr>";
+    tableFirebase.innerHTML += tr;
+}
+
+var tr = tableFirebase.childNodes;

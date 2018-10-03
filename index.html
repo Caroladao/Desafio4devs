@@ -9,8 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Desafio ForLogic 4devs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
 </head>
 
 <body>
@@ -79,10 +77,10 @@
                         </tr>
                         
                     </thead>
-                    <div id="tableFirebase">
+                    <tbody id="tableFirebase">
                         <!-- Aqui será carregado o corpo da tabela
                             com as informações vindas da API -->
-                        </div>
+                    </tbody>
                 </table>
             </div>
     </section>
@@ -230,13 +228,15 @@
                     <th scope="col">Nota</th>
                     <th scope="col">Feedback</th>
                 </tr>
+                <tbody id="table2Firebase">
+                    <!-- Aqui será carregado o corpo da tabela
+                        com as informações vindas da API -->
+                </tbody>
             </thead>
         </table>
     </section>
 
-
     <!-- Scripts js -->
-
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="./js/js.js"></script>
