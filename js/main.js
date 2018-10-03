@@ -106,6 +106,7 @@ var nomes = [];
 var responsaveis = [];
 var cadastro = [];
 var fireid = [];
+var n;
 
 firebase.database().ref('/Clientes/').on('value', function (snapshot) {
     snapshot.forEach(element => {
@@ -114,21 +115,56 @@ firebase.database().ref('/Clientes/').on('value', function (snapshot) {
         cadastro.push(element.val().data);
         fireid.push(element.key);
     });
+
+    n = snapshot.numChildren();
+
+    var i = 0;
+    var tableFirebase = document.getElementById("tableFirebase");
+    for (i = 0; i < n; i++) {
+        var tr = "<tr>" +
+            "<td>" + nomes[i] + "</td>" +
+            "<td>" + responsaveis[i] + "</td>" +
+            "<td>" + cadastro[i] + "</td>" +
+            "</tr>";
+        tableFirebase.innerHTML += tr;
+    }
+    console.log(n);
+
+    var selectClient = document.getElementById("select-client");
+    for (i = 0; i < n; i++) {
+        var select = "<option value='" + fireid[i] + "'>"+
+            responsaveis[i] + " - " + nomes[i] +
+            "</option>";
+        selectClient.innerHTML += select;
+    }
 })
 
-var n = fireid.length;
-console.log(n);
+var avaliadores = [];
+var mesavaliacoes = [];
+var anoavaliacoes = [];
+var notas = [];
+var motivos = [];
+var n2;
 
-var i = 0;
-var tableFirebase = document.getElementById("tableFirebase");
+firebase.database().ref('/Avaliacoes/').on('value', function (snapshot) {
+    snapshot.forEach(element => {
+        avaliadores.push(element.val().cliente);
+        mesavaliacoes.push(element.val().mes);
+        anoavaliacoes.push(element.val().ano);
+        notas.push(element.val().nota);
+        motivos.push(element.val().motivo);
+    });
 
-for(i= 0; i < n; i++){
-    var tr = "<tr>"+
-    "<td>" + nomes[i] + "</td>" +
-    "<td>" + responsaveis[i] + "</td>" +
-    "<td>" + cadastro[i] + "</td>" +
+    n2 = snapshot.numChildren();
+    var table2Firebase = document.getElementById("table2Firebase");
+    for(var j = 0; j < n2; j++){
+    var tr2 = "<tr>"+
+    "<td>" + avaliadores[j] + "</td>" +
+    "<td>" + mesavaliacoes[j] +"/" + anoavaliacoes[j] + "</td>" +
+    "<td>" + notas[j] + "</td>" +
+    "<td>" + motivos[j] + "</td>" +
     "</tr>";
-    tableFirebase.innerHTML += tr;
-}
-
-var tr = tableFirebase.childNodes;
+    table2Firebase.innerHTML += tr2;
+    }
+    console.log(n2);
+})
