@@ -167,28 +167,29 @@ firebase.database().ref('/Avaliacoes/').on('value', function (snapshot) {
     $("#btnTudo").click(function () {
         table2Firebase.innerHTML = "";
         for (var j = 0; j < n2; j++) {
-            var tr2 = "<tr>" +
+            var trr2 = "<tr>" +
                 "<td>" + nomeAvaliador(avaliadores[j]) + "</td>" +
                 "<td>" + mesavaliacoes[j] + "/" + anoavaliacoes[j] + "</td>" +
                 "<td>" + notas[j] + "</td>" +
                 "<td>" + motivos[j] + "</td>" +
                 "</tr>";
-            table2Firebase.innerHTML += tr2;
+            table2Firebase.innerHTML += trr2;
         }
     });
+
     $("#btnData").click(function () {
         table2Firebase.innerHTML = "";
         var bmes = getInputVal('avaMes');
         var bano = getInputVal('avaAno');
         console.log(bmes + "=" + bano);
 
-        for (i = 0; i < n2; i++) {
-            if (bmes == mesavaliacoes[i] && bano == anoavaliacoes[i]) {
+        for (j = 0; j < n2; j++) {
+            if (bmes == mesavaliacoes[j] && bano == anoavaliacoes[j]) {
                 var tr2 = "<tr>" +
-                    "<td>" + nomeAvaliador(avaliadores[i]) + "</td>" +
-                    "<td>" + mesavaliacoes[i] + "/" + anoavaliacoes[i] + "</td>" +
-                    "<td>" + notas[i] + "</td>" +
-                    "<td>" + motivos[i] + "</td>" +
+                    "<td>" + nomeAvaliador(avaliadores[j]) + "</td>" +
+                    "<td>" + mesavaliacoes[j] + "/" + anoavaliacoes[j] + "</td>" +
+                    "<td>" + notas[j] + "</td>" +
+                    "<td>" + motivos[j] + "</td>" +
                     "</tr>";
                 table2Firebase.innerHTML += tr2;
             }
@@ -249,7 +250,6 @@ function atualiza(nm,res,cad,cat,id) {
         data: cad,
         categoria: cat
     };
-
 
     var updates = {};
     updates['/Clientes/' + id] = Clientedados;
