@@ -250,11 +250,9 @@ function atualiza(nm,res,cad,cat,id) {
         categoria: cat
     };
 
-    var chaveCli = firebase.database().ref().child('Cliente').push().key;
 
     var updates = {};
-    updates['/Cliente/' + chaveCli] = Clientedados;
-    updates['/Cliente/' + id + '/' + chaveCli] = Clientedados;
+    updates['/Clientes/' + id] = Clientedados;
 
     return firebase.database().ref().update(updates);
 }
