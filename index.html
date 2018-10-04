@@ -72,8 +72,9 @@
                     <thead>
                         <tr>
                             <th scope="col">Nome da Empresa</th>
-                            <th scope="col">Data de Cadastro</th>
                             <th scope="col">Nome do Responsavel</th>
+                            <th scope="col">Data de Cadastro</th>
+                            <th scope="col">Categoria</th>
                         </tr>
                         
                     </thead>
@@ -90,20 +91,20 @@
         <form class="formcad" id="formAvalia">
             <h1>Cadastro de Avaliações</h1>
             <hr><br>
-            <div class="form-group">
+            <div class="form-group" id="selectsAvalia">
                 <label for="mes">* Selecione o mês e o ano da avaliação</label>
                 <br>
                 <select class="custom-select" id="selectMes">
                     <option selected>Mês</option>
-                    <option value="1">Janeiro</option>
-                    <option value="2">Fevereiro</option>
-                    <option value="3">Março</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Maio</option>
-                    <option value="6">Junho</option>
-                    <option value="7">Julho</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Setembro</option>
+                    <option value="01">Janeiro</option>
+                    <option value="02">Fevereiro</option>
+                    <option value="03">Março</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Maio</option>
+                    <option value="06">Junho</option>
+                    <option value="07">Julho</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Setembro</option>
                     <option value="10">Outubro</option>
                     <option value="11">Novembro</option>
                     <option value="12">Dezembro</option>
@@ -122,9 +123,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="select-client">Avaliador</label>
-                <select id="select-client" class="form-control" name="select" size="3">
-                </select>
+                <label for="select-client">* Selecione os avaliadores</label>
+                <div id="divClient">
+                </div>
             </div>
             <div class="form-group">
                 <label for="escala">* Em uma escala de 0 a 10, qual a probabilidade de você recomendar nosso
@@ -191,22 +192,22 @@
         <div class="form-group">
             <label for="mes">Selecione o mês e o ano da avaliação</label>
             <br>
-            <select class="custom-select">
+            <select class="custom-select" id="avaMes">
                 <option selected>Mês</option>
-                <option value="1">Janeiro</option>
-                <option value="2">Fevereiro</option>
-                <option value="3">Março</option>
-                <option value="4">Abril</option>
-                <option value="5">Maio</option>
-                <option value="6">Junho</option>
-                <option value="7">Julho</option>
-                <option value="8">Agosto</option>
-                <option value="9">Setembro</option>
+                <option value="01">Janeiro</option>
+                <option value="02">Fevereiro</option>
+                <option value="03">Março</option>
+                <option value="04">Abril</option>
+                <option value="05">Maio</option>
+                <option value="06">Junho</option>
+                <option value="07">Julho</option>
+                <option value="08">Agosto</option>
+                <option value="09">Setembro</option>
                 <option value="10">Outubro</option>
                 <option value="11">Novembro</option>
                 <option value="12">Dezembro</option>
             </select>
-            <select class="custom-select">
+            <select class="custom-select" id="avaAno">
                 <option selected>Ano</option>
                 <option value="2010">2010</option>
                 <option value="2011">2011</option>
@@ -219,7 +220,8 @@
                 <option value="2018">2018</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-success btn-lg">Buscar</button>
+        <button type="submit" id="btnData" class="btn btn-success btn-lg">Buscar por data</button>
+        <button type="submit" id="btnTudo" class="btn btn-success btn-lg">Buscar Todos</button>
         <table id="table-avaliacoes" class="table">
             <thead>
                 <tr>

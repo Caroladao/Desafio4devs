@@ -51,10 +51,10 @@ function saveMessage(nome, responsavel, data) {
     newMessagesRef.set({
         nome: nome,
         responsavel: responsavel,
-        data: data
+        data: data,
+        categoria: 'Nenhuma'
     });
 }
-
 
 //AVALIACAO
 // Mensagem em referencia a collection
@@ -70,12 +70,16 @@ function submitForm2(e) {
     //Pegar valores
     var mes = getInputVal('selectMes');
     var ano = getInputVal('selectAno');
-    var cliente = getInputVal('select-client');
+    var cliente = document.querySelector('input[name="checkclient"]:checked').value;
+    console.log(cliente);
     var nota = document.querySelector('input[name="inlineRadioOptions"]:checked').value;
     var motivo = getInputVal('motivo');
 
     //salvar mensagem
     saveMessage2(mes, ano, cliente, nota, motivo);
+
+    //Muda categoria
+    mudaCategoria(cliente, nota);
 
     //Show alert
     document.querySelector('.alertt').style.display = 'block';
@@ -96,7 +100,7 @@ function saveMessage2(mes, ano, cliente, nota, motivo) {
     newMessagesRef2.set({
         mes: mes,
         ano: ano,
-        cliente: cliente,
+        clientes: cliente,
         nota: nota,
         motivo: motivo
     });
@@ -106,6 +110,7 @@ var nomes = [];
 var responsaveis = [];
 var cadastro = [];
 var fireid = [];
+var categorias = [];
 var n;
 
 firebase.database().ref('/Clientes/').on('value', function (snapshot) {
@@ -113,6 +118,7 @@ firebase.database().ref('/Clientes/').on('value', function (snapshot) {
         nomes.push(element.val().nome);
         responsaveis.push(element.val().responsavel);
         cadastro.push(element.val().data);
+        categorias.push(element.val().categoria);
         fireid.push(element.key);
     });
 
@@ -125,18 +131,18 @@ firebase.database().ref('/Clientes/').on('value', function (snapshot) {
             "<td>" + nomes[i] + "</td>" +
             "<td>" + responsaveis[i] + "</td>" +
             "<td>" + cadastro[i] + "</td>" +
+            "<td>" + categorias[i] + "</td>" +
             "</tr>";
         tableFirebase.innerHTML += tr;
     }
-    console.log(n);
 
-    var selectClient = document.getElementById("select-client");
+    var divClient = document.getElementById("divClient");
     for (i = 0; i < n; i++) {
-        var select = "<option value='" + fireid[i] + "'>"+
-            responsaveis[i] + " - " + nomes[i] +
-            "</option>";
-        selectClient.innerHTML += select;
+        var check = "<label><input type='checkbox' name='checkclient' value='" + fireid[i] + "' onclick='groupChk(this)'/>" + responsaveis[i] + " - <b>" + nomes[i] + "</b> </label><br>";
+
+        divClient.innerHTML += check;
     }
+
 })
 
 var avaliadores = [];
@@ -145,10 +151,11 @@ var anoavaliacoes = [];
 var notas = [];
 var motivos = [];
 var n2;
+var table2Firebase = document.getElementById("table2Firebase");
 
 firebase.database().ref('/Avaliacoes/').on('value', function (snapshot) {
     snapshot.forEach(element => {
-        avaliadores.push(element.val().cliente);
+        avaliadores.push(element.val().clientes);
         mesavaliacoes.push(element.val().mes);
         anoavaliacoes.push(element.val().ano);
         notas.push(element.val().nota);
@@ -156,15 +163,118 @@ firebase.database().ref('/Avaliacoes/').on('value', function (snapshot) {
     });
 
     n2 = snapshot.numChildren();
-    var table2Firebase = document.getElementById("table2Firebase");
-    for(var j = 0; j < n2; j++){
-    var tr2 = "<tr>"+
-    "<td>" + avaliadores[j] + "</td>" +
-    "<td>" + mesavaliacoes[j] +"/" + anoavaliacoes[j] + "</td>" +
-    "<td>" + notas[j] + "</td>" +
-    "<td>" + motivos[j] + "</td>" +
-    "</tr>";
-    table2Firebase.innerHTML += tr2;
-    }
-    console.log(n2);
+
+    $("#btnTudo").click(function () {
+        table2Firebase.innerHTML = "";
+        for (var j = 0; j < n2; j++) {
+            var tr2 = "<tr>" +
+                "<td>" + nomeAvaliador(avaliadores[j]) + "</td>" +
+                "<td>" + mesavaliacoes[j] + "/" + anoavaliacoes[j] + "</td>" +
+                "<td>" + notas[j] + "</td>" +
+                "<td>" + motivos[j] + "</td>" +
+                "</tr>";
+            table2Firebase.innerHTML += tr2;
+        }
+    });
+    $("#btnData").click(function () {
+        table2Firebase.innerHTML = "";
+        var bmes = getInputVal('avaMes');
+        var bano = getInputVal('avaAno');
+        console.log(bmes + "=" + bano);
+
+        for (i = 0; i < n2; i++) {
+            if (bmes == mesavaliacoes[i] && bano == anoavaliacoes[i]) {
+                var tr2 = "<tr>" +
+                    "<td>" + nomeAvaliador(avaliadores[i]) + "</td>" +
+                    "<td>" + mesavaliacoes[i] + "/" + anoavaliacoes[i] + "</td>" +
+                    "<td>" + notas[i] + "</td>" +
+                    "<td>" + motivos[i] + "</td>" +
+                    "</tr>";
+                table2Firebase.innerHTML += tr2;
+            }
+        }
+    });
 })
+
+function nomeAvaliador(id) {
+    for (i = 0; i < n; i++) {
+        if (id == fireid[i]) {
+            return responsaveis[i];
+        }
+    }
+    return "não encontrado";
+}
+
+function mudaCategoria(id, nota) {
+    var nomee = [];
+    var responsavell = [];
+    var cadastroo = [];
+    var fireidd = [];
+    var categoriaa = [];
+    var n;
+
+    firebase.database().ref('/Clientes/').on('value', function (snapshot) {
+        snapshot.forEach(element => {
+            nomee.push(element.val().nome);
+            responsavell.push(element.val().responsavel);
+            cadastroo.push(element.val().data);
+            categoriaa.push(element.val().categoria);
+            fireidd.push(element.key);
+        });
+
+        n = snapshot.numChildren();
+    });
+
+    for (var i=0; i < n; i++) {
+        if (id == fireidd[i]) {
+            if (nota <= 6) {
+                atualiza(nomee[i], responsavell[i], cadastroo[i], "Detrator",fireidd[i]);
+            }
+            else if (nota > 6 && nota <= 8) {
+                atualiza(nomee[i], responsavell[i], cadastroo[i], "Neutro",fireidd[i]);
+            } else {
+                atualiza(nomee[i], responsavell[i], cadastroo[i], "Promotor",fireidd[i]);
+            }
+        }
+    }
+
+
+
+}
+
+function atualiza(nm,res,cad,cat,id) {
+    var Clientedados = {
+        nome: nm,
+        responsavel: res,
+        data: cad,
+        categoria: cat
+    };
+
+    var chaveCli = firebase.database().ref().child('Cliente').push().key;
+
+    var updates = {};
+    updates['/Cliente/' + chaveCli] = Clientedados;
+    updates['/Cliente/' + id + '/' + chaveCli] = Clientedados;
+
+    return firebase.database().ref().update(updates);
+}
+
+function groupChk(obj) {
+    var chks = document.getElementsByName('checkclient');
+    var cont = 0;
+
+    for (var i = 0; i < chks.length; i++) {
+        if (chks[i].checked)
+            cont++;
+
+        var por = n * 0.2;
+
+        if (cont > 1) {
+            if (por < cont) {
+                alert("Só pode marcar 20% dos clientes");
+                obj.checked = false;
+                break;
+            }
+        }
+    }
+}
